@@ -4,7 +4,8 @@
   "description": "White List Management - Test Round",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
