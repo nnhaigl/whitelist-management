@@ -1,6 +1,4 @@
-// Update with your config settings.
-
-require('dotenv').config()
+require('dotenv').config();
 module.exports = {
   client: 'pg',
   connection: {
@@ -11,7 +9,7 @@ module.exports = {
     password: process.env.DATABASE_PASSWORD,
   },
   seeds: {
-    directory: './db/seeds',
+    directory: './src/database/seeds',
     tableName: 'knex_seeds',
   },
   pool: {
@@ -19,7 +17,8 @@ module.exports = {
     max: 10,
   },
   migrations: {
-    directory: './db/migrations',
+    directory: './src/database/migrations',
     tableName: 'knex_migrations',
   },
-}
+  acquireConnectionTimeout: 10000,
+};
