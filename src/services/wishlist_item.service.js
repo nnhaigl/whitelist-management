@@ -2,7 +2,7 @@ const { connection } = require('../database');
 
 module.exports = {
   findAll: async (wishlistId) => {
-    return connection.wishlist_item
+    return connection.knex('wishlist_item')
       .select('*')
       .where('wishlist_id', wishlistId);
   },

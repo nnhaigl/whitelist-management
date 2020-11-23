@@ -41,10 +41,10 @@ route.put(
     const { user } = req.res.locals;
     const wishlist = await wishlistService.findById(id);
     if (wishlist.length === 0) {
-      response.errorResponse(res, constants.errors.NOT_FOUND, 404);
+      return response.errorResponse(res, constants.errors.NOT_FOUND, 404);
     }
     if (wishlist[0].user_id != user.id) {
-      response.errorResponse(res, constants.errors.NOT_FOUND, 403);
+      return response.errorResponse(res, constants.errors.NOT_FOUND, 403);
     }
     await wishlistService.update(id, title, note, status);
     const wishlistResult = await wishlistService.findById(id);
@@ -69,10 +69,10 @@ route.post(
     const { user } = req.res.locals;
     const wishlist = await wishlistService.findById(id);
     if (wishlist.length === 0) {
-      response.errorResponse(res, constants.errors.NOT_FOUND, 404);
+      return response.errorResponse(res, constants.errors.NOT_FOUND, 404);
     }
     if (wishlist[0].user_id != user.id) {
-      response.errorResponse(res, constants.errors.NOT_FOUND, 403);
+      return response.errorResponse(res, constants.errors.NOT_FOUND, 403);
     }
     const itemIds = await wishlist_itemService.insertArray(
       req.body.map((item) => {
@@ -107,17 +107,17 @@ route.put(
     const { title, note, status } = req.body;
     const wishlist = await wishlistService.findById(id);
     if (wishlist.length === 0) {
-      response.errorResponse(res, constants.errors.NOT_FOUND, 404);
+      return response.errorResponse(res, constants.errors.NOT_FOUND, 404);
     }
     if (wishlist[0].user_id != user.id) {
-      response.errorResponse(res, constants.errors.NOT_FOUND, 403);
+      return response.errorResponse(res, constants.errors.NOT_FOUND, 403);
     }
     const item = await wishlist_itemService.findByIds([parseInt(item_id)]);
     if (item.length === 0) {
-      response.errorResponse(res, constants.errors.NOT_FOUND, 404);
+      return response.errorResponse(res, constants.errors.NOT_FOUND, 404);
     }
     if (item[0].wishlist_id !== wishlist[0].id) {
-      response.errorResponse(res, constants.errors.BAD_REQUEST, 400);
+      return response.errorResponse(res, constants.errors.BAD_REQUEST, 400);
     }
     const itemIds = await wishlist_itemService.update(
       item_id,
@@ -162,10 +162,10 @@ route.get('/:id', [authorizationMiddleware], async (req, res) => {
   const { user } = req.res.locals;
   const wishlist = await wishlistService.findById(id);
   if (wishlist.length === 0) {
-    response.errorResponse(res, constants.errors.NOT_FOUND, 404);
+    return response.errorResponse(res, constants.errors.NOT_FOUND, 404);
   }
   if (wishlist[0].user_id != user.id) {
-    response.errorResponse(res, constants.errors.NOT_FOUND, 403);
+    return response.errorResponse(res, constants.errors.NOT_FOUND, 403);
   }
   const items = await wishlist_itemService.findAll(wishlist[0].id);
   return response.successResponse(res, {

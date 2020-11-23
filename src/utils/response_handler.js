@@ -6,7 +6,6 @@ module.exports = {
     return res.status(200).json(body);
   },
   errorResponse: (res, error, statusCode) => {
-    console.log(logger);
     logger.info(
       `Response error with status = ${statusCode} body = ${JSON.stringify(
         error

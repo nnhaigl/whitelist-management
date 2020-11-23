@@ -1,6 +1,5 @@
 const { encrypt } = require('../utils');
 function authorization(req, res, next) {
-  console.log("==========================")
   const { authorization } = req.headers;
   if (!authorization || authorization.startsWith('Bearer') === false) {
     return res.status(401).send();

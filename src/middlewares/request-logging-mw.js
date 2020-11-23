@@ -1,5 +1,6 @@
 const { logger } = require('../utils');
 
 module.exports = (req, res, next) => {
-    logger.info('Call Request')
+    logger.info(`InComming Request ${req.method} ${req.path}`)
+    next();
 };

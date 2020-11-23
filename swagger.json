@@ -1,0 +1,601 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "API for wishlist manangement. A test project for star global",
+      "version": "1.0.0",
+      "title": "Swagger WishList Management",
+      "termsOfService": "http://swagger.io/terms/",
+      "contact": {
+        "email": "nnhaigl@gmail.com"
+      },
+      "license": {
+        "name": "Apache 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      }
+    },
+    "host": "localhost:3000",
+    "schemes": [
+      "http"
+    ],
+    "paths": {
+      "/user/login": {
+        "post": {
+          "tags": [
+            "User"
+          ],
+          "summary": "Login to system",
+          "description": "",
+          "operationId": "login",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "credential",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "login success",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "default": "Hai Nguyen"
+                  },
+                  "access_token": {
+                    "type": "string",
+                    "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJubmhhaWdsQGdtYWlsLmNvbSIsImlhdCI6MTYwNjEwMzk3MX0.fI1Dl_OkEESTqQrEvtk7NeVf7O5_8BD97FEt5PpxQKU"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid email or password"
+            }
+          }
+        }
+      },
+      "/wishlist": {
+        "get": {
+          "tags": [
+            "wishlist"
+          ],
+          "summary": "Get all wishlist by user",
+          "description": "Get all wishlist by user",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "authorization token",
+              "required": true,
+              "type": "string",
+              "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJubmhhaWdsQGdtYWlsLmNvbSIsImlhdCI6MTYwNjA3MDIxNn0.cur81uHCrDHxxOG4YYGN-MeG_gzuCcHVOI1n6ETQvnQ"
+            },
+            {
+              "name": "offset",
+              "in": "query",
+              "description": "offset array",
+              "required": true,
+              "type": "number"
+            },
+            {
+              "name": "limit",
+              "in": "query",
+              "description": "limit result",
+              "required": true,
+              "type": "number"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "total": {
+                    "type": "number"
+                  },
+                  "offset": {
+                    "type": "number"
+                  },
+                  "limit": {
+                    "type": "number"
+                  },
+                  "data": {
+                    "$ref": "#/definitions/Wishlist"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "bad request"
+            },
+            "401": {
+              "description": "UnAuthorization"
+            }
+          },
+          "security": [
+            {
+              "api_key": []
+            }
+          ]
+        },
+        "post": {
+          "tags": [
+            "wishlist"
+          ],
+          "summary": "Insert new wishlist",
+          "description": "Insert new wishlist",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "authorization token",
+              "required": true,
+              "type": "string",
+              "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJubmhhaWdsQGdtYWlsLmNvbSIsImlhdCI6MTYwNjA3MDIxNn0.cur81uHCrDHxxOG4YYGN-MeG_gzuCcHVOI1n6ETQvnQ"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "note": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "note": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "bad request"
+            },
+            "401": {
+              "description": "UnAuthorization"
+            }
+          },
+          "security": [
+            {
+              "api_key": []
+            }
+          ]
+        }
+      },
+      "/wishlist/:id": {
+        "get": {
+          "tags": [
+            "wishlist"
+          ],
+          "summary": "Get wishlist detail",
+          "description": "Get all wishlist by user",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "authorization token",
+              "required": true,
+              "type": "string",
+              "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJubmhhaWdsQGdtYWlsLmNvbSIsImlhdCI6MTYwNjA3MDIxNn0.cur81uHCrDHxxOG4YYGN-MeG_gzuCcHVOI1n6ETQvnQ"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "uuid of wishlist",
+                    "default": "76e1a763-d7ef-4fda-bf50-13908cc63157"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "title of wishlist",
+                    "default": " quis diam luctus lobortis. Class aptent taciti s"
+                  },
+                  "note": {
+                    "type": "string",
+                    "description": "note of wishlist",
+                    "default": " quis diam luctus lobortis. Class aptent taciti s"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "time to create",
+                    "default": "2020-11-22T20:06:37.575Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "time to update",
+                    "default": "2020-11-22T20:06:37.575Z"
+                  },
+                  "status": {
+                    "type": "boolean",
+                    "description": "status of wishlist",
+                    "default": "true"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/WishlistItem"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "bad request"
+            },
+            "401": {
+              "description": "UnAuthorization"
+            },
+            "403": {
+              "description": "Forbidden - user is not own of wishlist"
+            }
+          },
+          "security": [
+            {
+              "api_key": []
+            }
+          ]
+        },
+        "put": {
+          "tags": [
+            "wishlist"
+          ],
+          "summary": "Update wish list",
+          "description": "update wishlist",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "authorization token",
+              "required": true,
+              "type": "string",
+              "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJubmhhaWdsQGdtYWlsLmNvbSIsImlhdCI6MTYwNjA3MDIxNn0.cur81uHCrDHxxOG4YYGN-MeG_gzuCcHVOI1n6ETQvnQ"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "note": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "uuid of wishlist",
+                    "default": "76e1a763-d7ef-4fda-bf50-13908cc63157"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "title of wishlist",
+                    "default": " quis diam luctus lobortis. Class aptent taciti s"
+                  },
+                  "note": {
+                    "type": "string",
+                    "description": "note of wishlist",
+                    "default": " quis diam luctus lobortis. Class aptent taciti s"
+                  },
+                  "status": {
+                    "type": "boolean",
+                    "description": "status of wishlist",
+                    "default": "true"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "bad request"
+            },
+            "401": {
+              "description": "UnAuthorization"
+            },
+            "403": {
+              "description": "Forbidden - user is not own of wishlist"
+            }
+          },
+          "security": [
+            {
+              "api_key": []
+            }
+          ]
+        }
+      },
+      "/wishlist/:id/items": {
+        "post": {
+          "tags": [
+            "wishlist"
+          ],
+          "summary": "Add wishlist item",
+          "description": "Add wishlist item",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "authorization token",
+              "required": true,
+              "type": "string",
+              "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJubmhhaWdsQGdtYWlsLmNvbSIsImlhdCI6MTYwNjA3MDIxNn0.cur81uHCrDHxxOG4YYGN-MeG_gzuCcHVOI1n6ETQvnQ"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "note": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "note": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "bad request"
+            },
+            "401": {
+              "description": "UnAuthorization"
+            },
+            "403": {
+              "description": "Forbidden - user is not own of wishlist"
+            },
+            "404": {
+              "description": "NotFound - resource not found"
+            }
+          },
+          "security": [
+            {
+              "api_key": []
+            }
+          ]
+        }
+      },
+      "/wishlist/:id/items/:item_id": {
+        "post": {
+          "tags": [
+            "wishlist"
+          ],
+          "summary": "Add wishlist item",
+          "description": "Add wishlist item",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "authorization token",
+              "required": true,
+              "type": "string",
+              "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJubmhhaWdsQGdtYWlsLmNvbSIsImlhdCI6MTYwNjA3MDIxNn0.cur81uHCrDHxxOG4YYGN-MeG_gzuCcHVOI1n6ETQvnQ"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "note": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "note": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "bad request"
+            },
+            "401": {
+              "description": "UnAuthorization"
+            },
+            "403": {
+              "description": "Forbidden - user is not own of wishlist"
+            },
+            "404": {
+              "description": "NotFound - resource not found"
+            }
+          },
+          "security": [
+            {
+              "api_key": []
+            }
+          ]
+        }
+      }
+    },
+    "securityDefinitions": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      }
+    },
+    "definitions": {
+      "Wishlist": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "default": "086CE87D-7494-EA06-6ABF-6465E650E379"
+          },
+          "title": {
+            "type": "string",
+            "default": "risus quis diam luctus lobortis. Class aptent taciti sociosqu a"
+          },
+          "note": {
+            "type": "string",
+            "default": "risus quis diam luctus lobortis. Class aptent taciti sociosqu a"
+          }
+        }
+      },
+      "WishlistItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "default": 1
+          },
+          "title": {
+            "type": "string",
+            "default": "risus quis diam luctus lobortis. Class aptent taciti sociosqu a"
+          },
+          "note": {
+            "type": "string",
+            "default": "risus quis diam luctus lobortis. Class aptent taciti sociosqu a"
+          },
+          "status": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      }
+    },
+    "externalDocs": {
+      "description": "Find out more about Swagger",
+      "url": "http://swagger.io"
+    }
+  }

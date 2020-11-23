@@ -1,0 +1,38 @@
+const app = require('../server'); // Link to your server file
+require('dotenv').config();
+const supertest = require('supertest');
+const request = supertest(app);
+const connection = require('../src/database/connection');
+
+describe('User', () => {
+  beforeAll(async () => {
+    process.env.NODE_ENV = 'test';
+    await connection.knex.migrate.latest();
+    await connection.knex.seed.run();
+  });
+  it('it should return access token if login success', async (done) => {
+    const res = await request
+      .post('/user/login')
+      .send({ email: 'nnhaigl@gmail.com', password: '123456' })
+      .set('Accept', 'application/json');
+    expect(res.status).toBe(200);
+    expect(res.body.name).toBe("Hai Nguyen")
+    expect(res.body.access_token).not.toBeNull();
+    done();
+  });
+  it('it should return 401 if invalid credential', async (done) => {
+    const res = await request
+      .post('/user/login')
+      .send({ email: 'nnhaigl123@gmail.com', password: '123456' })
+      .set('Accept', 'applica3333tion/json');
+    expect(res.status).toBe(401);
+    done();
+  });
+  it('it should return 400 if missing credential', async (done) => {
+    const res = await request
+      .post('/user/login')
+      .set('Accept', 'applica3333tion/json');
+    expect(res.status).toBe(400);
+    done();
+  });
+});

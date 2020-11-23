@@ -4,8 +4,9 @@
   "description": "White List Management - Test Round",
   "main": "index.js",
   "scripts": {
-    "test": "npm test",
-    "start": "node ./src/database/db_creation.js && npm run migrate && nodemon index.js",
+    "test": "jest --coverage --coverageReporters=html --coverageReporters=text --coverageReporters=text-summary --coverageDirectory ./TestCoverageReportTemp --detectOpenHandles --forceExit --expand --errorOnDeprecated --logHeapUsage --runInBand --passWithNoTests",
+    "start-developer": "node ./src/database/db_creation.js && npm run migrate && nodemon index.js",
+    "start": "npm run migrate && nodemon index.js",
     "migrate": "knex migrate:latest  && knex seed:run"
   },
   "repository": {
@@ -39,6 +40,7 @@
     "nodemon": "^2.0.6",
     "pg": "^8.5.1",
     "pgtools": "^0.3.0",
+    "sqlite3": "^5.0.0",
     "swagger-ui-express": "^4.1.5",
     "uuid": "^8.3.1",
     "winston": "^3.3.3"
@@ -49,6 +51,28 @@
     "eslint": "6.8.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "prettier": "^2.1.2"
+    "jest": "^26.6.3",
+    "prettier": "^2.1.2",
+    "supertest": "^6.0.1"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "rootDir": ".",
+    "testRegex": ".spec.js$",
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "!**/node_modules/**",
+      "!**/migrations/**",
+      "!**/seed/**",
+      "!.eslintrc.js",
+      "!knexfile.js",
+      "!prettier.config.js",
+      "!TestCoverageReportTemp/**",
+      "!./src/database/**",
+      "!index.js"
+    ]
   }
 }

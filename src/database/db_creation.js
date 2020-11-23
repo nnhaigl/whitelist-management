@@ -40,7 +40,8 @@ function PgError(pgErr) {
   this.pgErr = pgErr;
 }
 PgError.prototype = Object.create(Error.prototype);
-const pgconfig = require('../../knexfile').connection;
+const pgconfig = require('../../knexfile')[process.env.NODE_ENV || 'default']
+  .connection;
 const opts = {
   user: pgconfig.user,
   password: pgconfig.password,
@@ -49,7 +50,6 @@ const opts = {
 };
 dbName = pgconfig.database;
 function createOrDropDatabase(action) {
-  console.log('xxxxx');
   logger.info('start create database');
   action = action.toUpperCase();
   let config;
@@ -95,7 +95,6 @@ function createOrDropDatabase(action) {
 }
 
 const runQuery = async (client, query, cb) => {
-  console.log(query);
   return new BPromise(async (resolve, reject) => {
     client.query(query, function (pgErr, res) {
       var err;
