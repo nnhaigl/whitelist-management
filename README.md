@@ -6,11 +6,11 @@
 ### Setup by manual
 1. install package `npm install`
 2. setup env variable
-    2.1. DATABASE_PORT: dabase port
-    2.2. DATABASE_HOST: database host
-    2.3. DATABASE_USERNAME: database username
-    2.4. DATABASE_PASSWORD: database password
-    2.5. DATABASE_NAME: database name
+    * DATABASE_PORT: dabase port
+    * DATABASE_HOST: database host
+    * DATABASE_USERNAME: database username
+    * DATABASE_PASSWORD: database password
+    * DATABASE_NAME: database name
 3. run test `npm test`
 4. start application `npm start`
 ## How to work
